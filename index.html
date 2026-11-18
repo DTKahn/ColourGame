@@ -73,33 +73,28 @@
     <section class="view view-play" id="view-play" hidden aria-label="Game">
       <div class="play-grid">
         <div class="card target-card">
-          <div class="target-top">
-            <div class="target-head">
-              <span class="eyebrow" id="target-eyebrow">Find this color</span>
-              <output class="code" id="target-code" aria-live="polite">#000000</output>
-            </div>
-            <div class="result" id="result" aria-live="polite">
-              <div class="result-points"><span id="result-points">+0</span><small>pts</small></div>
-              <div class="result-meta">
-                <strong id="result-rating"></strong>
-                <span id="result-delta" title="CIEDE2000 color difference. Below 1 is invisible to most people."></span>
-              </div>
-            </div>
+          <div class="target-head">
+            <span class="eyebrow">Find this color</span>
+            <output class="code" id="target-code" aria-live="polite">#000000</output>
           </div>
-
-          <div class="compare" id="compare">
-            <div class="compare-target" id="compare-target">
-              <span class="compare-label"><span>Target</span><strong id="compare-target-code"></strong></span>
-            </div>
-            <div class="compare-guess" id="compare-guess">
-              <span class="compare-label"><span>Yours</span><strong id="compare-guess-code"></strong></span>
+          <div class="result" id="result" aria-live="polite">
+            <div class="result-points"><span id="result-points">+0</span><small>pts</small></div>
+            <div class="result-meta">
+              <strong id="result-rating"></strong>
+              <span id="result-delta" title="CIEDE2000 color difference. Below 1 is invisible to most people."></span>
             </div>
           </div>
         </div>
 
         <div class="card picker-card">
           <div id="picker"></div>
-          <button class="btn btn-primary btn-block" type="button" id="primary-action">Lock in</button>
+          <div class="picker-footer">
+            <div class="pick-preview">
+              <span class="pick-swatch" id="pick-swatch" aria-hidden="true"></span>
+              <span class="pick-label">Your<br>pick</span>
+            </div>
+            <button class="btn btn-primary" type="button" id="primary-action">Lock in</button>
+          </div>
         </div>
       </div>
     </section>
@@ -113,7 +108,13 @@
         <p class="badge" id="results-best" hidden>New best</p>
       </div>
 
-      <ul class="card round-list" id="round-list"></ul>
+      <div class="card round-card">
+        <div class="round-legend" aria-hidden="true">
+          <span class="legend-item"><span class="legend-dot legend-target"></span>Target</span>
+          <span class="legend-item"><span class="legend-dot legend-guess"></span>Your pick</span>
+        </div>
+        <ul class="round-list" id="round-list"></ul>
+      </div>
 
       <div class="actions">
         <button class="btn btn-primary" type="button" data-action="start">Play again</button>

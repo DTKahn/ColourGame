@@ -1,7 +1,7 @@
 import { Game } from './game.js';
 import { ColorPicker } from './picker.js';
 import { getFormat } from './formats.js';
-import { readableOn, rgbToHex } from './color.js';
+import { rgbToHex } from './color.js';
 import { titleFor } from './scoring.js';
 import { getBest, recordScore, getPref, setPref } from './storage.js';
 
@@ -31,11 +31,7 @@ const el = {
   roundsControl: $('#rounds-control'),
   homeBest: $('#home-best'),
   targetCode: $('#target-code'),
-  compare: $('#compare'),
-  compareTarget: $('#compare-target'),
-  compareGuess: $('#compare-guess'),
-  compareTargetCode: $('#compare-target-code'),
-  compareGuessCode: $('#compare-guess-code'),
+  pickSwatch: $('#pick-swatch'),
   result: $('#result'),
   resultPoints: $('#result-points'),
   resultRating: $('#result-rating'),
@@ -107,15 +103,13 @@ function startGame() {
 function renderRound() {
   const { game } = state;
   const round = game.current;
-  state.revealed = false;
+  state.revealed = false; // "revealed" = this round's score is showing
 
   el.targetCode.textContent = getFormat(game.format).format(round.target);
   el.statRound.textContent = `${game.roundNumber}/${game.totalRounds}`;
   el.statScore.textContent = fmt(game.score);
 
-  el.compare.classList.remove('is-revealed');
   el.result.classList.remove('is-visible');
-  el.compareTarget.style.background = css(round.target);
 
   // Start each round from a fresh, neutral-ish spot so the last answer doesn't leak.
   picker.setHsv({ h: Math.random() * 360, s: 0.5, v: 0.6 });
@@ -126,7 +120,7 @@ function renderRound() {
 }
 
 function paintGuess(rgb) {
-  el.compareGuess.style.background = css(rgb);
+  el.pickSwatch.style.background = css(rgb);
 }
 
 function lockIn() {
@@ -135,14 +129,7 @@ function lockIn() {
   state.revealed = true;
   picker.setDisabled(true);
 
-  const label = (node, codeNode, rgb) => {
-    node.style.color = readableOn(rgb);
-    codeNode.textContent = rgbToHex(rgb);
-  };
-  label(el.compareTarget, el.compareTargetCode, round.target);
-  label(el.compareGuess, el.compareGuessCode, round.guess);
-  el.compare.classList.add('is-revealed');
-
+  // No target swatch here on purpose: the color is only revealed on the results screen.
   el.resultRating.textContent = round.rating;
   el.resultDelta.textContent = `ΔE ${round.deltaE.toFixed(1)}`;
   el.result.classList.add('is-visible');
@@ -181,7 +168,7 @@ function finishGame() {
     li.className = 'round-row';
     li.innerHTML = `
       <span class="round-index">${i + 1}</span>
-      <span class="round-swatch" aria-hidden="true">
+      <span class="round-swatch" title="Target ${rgbToHex(round.target)} · Your pick ${rgbToHex(round.guess)}">
         <span style="background:${css(round.target)}"></span>
         <span style="background:${css(round.guess)}"></span>
       </span>

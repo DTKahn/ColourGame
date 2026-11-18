@@ -348,20 +348,10 @@ main {
 
 .target-card {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 20px;
-}
-
-@media (min-width: 860px) {
-  .target-card { padding: 28px; gap: 24px; }
-}
-
-.target-top {
-  display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
+  padding: 20px;
 }
 
 .target-head { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -376,62 +366,21 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
-/* The swatch: shows your live pick, then splits to compare with the target. */
-.compare {
-  position: relative;
-  overflow: hidden;
-  flex: 1;
-  min-height: clamp(84px, 14dvh, 160px);
-  border-radius: var(--radius-md);
-  box-shadow: inset 0 0 0 1px var(--hairline);
-  isolation: isolate;
-}
-
+/* Desktop: the code is the hero of the left card. */
 @media (min-width: 860px) {
-  .compare { min-height: 260px; }
+  .target-card {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 40px 28px;
+    text-align: center;
+  }
+
+  .target-head { align-items: center; gap: 8px; }
+  .code { font-size: clamp(56px, 6.4vw, 80px); }
+  .result { align-items: center; text-align: center; min-height: 72px; }
 }
-
-.compare-guess,
-.compare-target {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  padding: 14px 16px;
-}
-
-.compare-guess { justify-content: flex-end; text-align: right; z-index: 0; }
-
-.compare-target {
-  z-index: 1;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.6s var(--ease);
-}
-
-.compare.is-revealed .compare-target { clip-path: inset(0 50% 0 0); }
-
-.compare-label {
-  display: flex;
-  flex-direction: column;
-  font-size: 13px;
-  line-height: 1.3;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.4s 0.3s, transform 0.4s 0.3s var(--ease);
-}
-
-.compare-target .compare-label { max-width: 50%; }
-
-.compare-label > span { opacity: 0.75; font-weight: 500; }
-
-.compare-label strong {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0;
-}
-
-.compare.is-revealed .compare-label { opacity: 1; transform: none; }
 
 .result {
   display: flex;
@@ -450,9 +399,9 @@ main {
   display: flex;
   align-items: baseline;
   gap: 4px;
-  font-size: clamp(26px, 6.5vw, 34px);
-  line-height: 1.1;
+  font-size: clamp(26px, 6.5vw, 40px);
   font-weight: 700;
+  line-height: 1.1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
@@ -479,6 +428,35 @@ main {
 
 @media (min-width: 860px) {
   .picker-card { padding: 28px; gap: 24px; }
+}
+
+.picker-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.picker-footer .btn { flex: 1; }
+
+.pick-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.pick-swatch {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px var(--hairline);
+}
+
+.pick-label {
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 /* ---------- Picker ---------- */
@@ -511,7 +489,7 @@ main {
 @media (max-width: 859px) {
   .picker-pad {
     aspect-ratio: auto;
-    height: clamp(160px, calc(100dvh - 440px), 320px);
+    height: clamp(180px, calc(100dvh - 340px), 360px);
   }
 }
 
@@ -609,19 +587,47 @@ main {
   font-weight: 600;
 }
 
-.round-list {
-  max-width: 640px;
+.round-card {
+  max-width: 680px;
   margin: 0 auto;
   padding: 6px 0;
+}
+
+.round-legend {
+  display: flex;
+  gap: 18px;
+  padding: 12px 20px 8px;
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.legend-item { display: inline-flex; align-items: center; gap: 6px; }
+
+.legend-dot {
+  width: 14px;
+  height: 10px;
+  border: 1.5px solid var(--text-3);
+}
+
+.legend-target { border-radius: 5px 0 0 5px; background: var(--text-3); }
+.legend-guess { border-radius: 0 5px 5px 0; }
+
+.round-list {
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
 
 .round-row {
   display: grid;
-  grid-template-columns: 20px 56px 1fr auto;
+  grid-template-columns: 16px clamp(80px, 22vw, 120px) 1fr auto;
   align-items: center;
   gap: 14px;
   padding: 12px 20px;
+}
+
+@media (max-width: 420px) {
+  .round-row { gap: 10px; padding: 10px 16px; }
 }
 
 .round-row + .round-row { border-top: 1px solid var(--hairline); }
@@ -636,9 +642,9 @@ main {
 .round-swatch {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 40px;
+  height: clamp(52px, 13vw, 64px);
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: inset 0 0 0 1px var(--hairline);
 }
 
