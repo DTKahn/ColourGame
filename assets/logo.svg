@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="hex"><path d="M16 1.5 28.56 8.75v14.5L16 30.5 3.44 23.25V8.75Z" stroke-linejoin="round"/></clipPath>
+  </defs>
+  <g clip-path="url(#hex)">
+    <path fill="#FF3B30" d="M16 16 16 0 30 8Z"/>
+    <path fill="#FF9500" d="M16 16 30 8 30 24Z"/>
+    <path fill="#FFCC00" d="M16 16 30 24 16 32Z"/>
+    <path fill="#34C759" d="M16 16 16 32 2 24Z"/>
+    <path fill="#007AFF" d="M16 16 2 24 2 8Z"/>
+    <path fill="#AF52DE" d="M16 16 2 8 16 0Z"/>
+  </g>
+</svg>

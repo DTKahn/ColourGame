@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hexact — the hex color game</title>
+  <meta name="description" content="See a hex code, find the color. A minimal color-matching game.">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Hexact">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="brand" type="button" data-action="home" aria-label="Hexact home">
+        <img src="assets/logo.svg" alt="" width="26" height="26">
+        <span>Hexact</span>
+      </button>
+      <div class="topbar-stats" id="topbar-stats" hidden>
+        <span class="stat"><span class="stat-label">Color</span> <strong id="stat-round">1/5</strong></span>
+        <span class="stat"><span class="stat-label">Score</span> <strong id="stat-score">0</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Home -->
+    <section class="view view-home" id="view-home" aria-labelledby="home-title">
+      <div class="hero">
+        <img class="hero-logo" src="assets/logo.svg" alt="" width="104" height="104">
+        <h1 id="home-title">Hexact.</h1>
+        <p class="lede">See a hex code. Find the color.</p>
+
+        <div class="setup">
+          <span class="setup-label" id="rounds-label">Colors per game</span>
+          <div class="segmented" role="radiogroup" aria-labelledby="rounds-label" id="rounds-control">
+            <button type="button" role="radio" data-rounds="5">5</button>
+            <button type="button" role="radio" data-rounds="10">10</button>
+            <button type="button" role="radio" data-rounds="20">20</button>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-large" type="button" data-action="start">Play</button>
+        <p class="best" id="home-best" hidden></p>
+      </div>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step-num">1</span>
+          <h2>Read the code</h2>
+          <p>Each round shows a hex code like <code>#3A7BD5</code>.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">2</span>
+          <h2>Pick the color</h2>
+          <p>Drag to find the color you think it describes.</p>
+        </li>
+        <li class="step">
+          <span class="step-num">3</span>
+          <h2>Score points</h2>
+          <p>The closer you are, the more you earn — up to 1,000 per color.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Play -->
+    <section class="view view-play" id="view-play" hidden aria-label="Game">
+      <div class="play-grid">
+        <div class="card target-card">
+          <div class="target-top">
+            <div class="target-head">
+              <span class="eyebrow" id="target-eyebrow">Find this color</span>
+              <output class="code" id="target-code" aria-live="polite">#000000</output>
+            </div>
+            <div class="result" id="result" aria-live="polite">
+              <div class="result-points"><span id="result-points">+0</span><small>pts</small></div>
+              <div class="result-meta">
+                <strong id="result-rating"></strong>
+                <span id="result-delta" title="CIEDE2000 color difference. Below 1 is invisible to most people."></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="compare" id="compare">
+            <div class="compare-target" id="compare-target">
+              <span class="compare-label"><span>Target</span><strong id="compare-target-code"></strong></span>
+            </div>
+            <div class="compare-guess" id="compare-guess">
+              <span class="compare-label"><span>Yours</span><strong id="compare-guess-code"></strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card picker-card">
+          <div id="picker"></div>
+          <button class="btn btn-primary btn-block" type="button" id="primary-action">Lock in</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="view view-results" id="view-results" hidden aria-labelledby="results-title">
+      <div class="results-hero">
+        <span class="eyebrow" id="results-title">Final score</span>
+        <div class="results-score"><span id="results-score">0</span><small id="results-max">/ 5,000</small></div>
+        <p class="results-tagline" id="results-tagline"></p>
+        <p class="badge" id="results-best" hidden>New best</p>
+      </div>
+
+      <ul class="card round-list" id="round-list"></ul>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="button" data-action="start">Play again</button>
+        <button class="btn btn-secondary" type="button" data-action="home">Home</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
